@@ -40,7 +40,9 @@ func New(w io.Writer) *Alog {
 // the caller from being blocked.
 func (al Alog) Start() {
 	for msg := range al.msgCh {
-		go al.write(msg, nil)
+		go func(msg string) {
+			al.write(msg, nil)
+		}(msg)
 	}
 }
 
